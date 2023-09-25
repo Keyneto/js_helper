@@ -7,7 +7,7 @@ function showInfo(content) {
     const ratings = getValuesByIndex(data, 4).map(n => +n);
     console.log(`Ratings: Min: ${Math.min(...ratings)} Max: ${Math.max(...ratings)}`)
 
-    let yearsOld = 0, name = '', bestSalon = '', cheapestPrice = Number.MAX_VALUE;
+    let yearsOld = 0, oldestSalon = '', bestSalon = '', cheapestPrice = Number.MAX_VALUE;
 
     data.forEach(row => {
         let [salonName, price, , age] = row.split(',');
@@ -15,10 +15,10 @@ function showInfo(content) {
         let avgPrice = (minPrice + maxPrice) / 2;
         let currentYearOld = Number(age);
 
-        if (currentYearOld > yearsOld) [yearsOld, name] = [currentYearOld, salonName];
+        if (currentYearOld > yearsOld) [yearsOld, oldestSalon] = [currentYearOld, salonName];
         if (currentYearOld > 5 && avgPrice < cheapestPrice) [cheapestPrice, bestSalon] = [avgPrice, salonName];
     })
-    console.log(`Oldest barbershop: ${name}`)
+    console.log(`Oldest barbershop: ${oldestSalon}`)
     console.log(`Best barbershop: ${bestSalon}`)
 }
 
