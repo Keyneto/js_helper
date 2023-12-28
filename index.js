@@ -1,23 +1,20 @@
-function showInfo(content) {
-    const data = content.split('\n').slice(1).map(str => str.trim().split(','));
-    console.log(`Count: ${data.length}`);
+class Validator {
+    string() {
+        return new StringValidator();
+    }
+}
 
-    console.log(`Barbershops: ${[...new Set(data.map(row => row[0]))].sort().join(', ')}`);
+class StringValidator {
+    constructor() {
+        this.checks = [(value) => typeof value === 'string'];
+    }
 
-    const ratings = data.map(row => Number(row[4]));
-    console.log(`Ratings: Min: ${Math.min(...ratings)} Max: ${Math.max(...ratings)}`)
+    containsNumber() {
+        this.checks.push((value) => /[0-9]/.test(value));
+        return this;
+    }
 
-    let yearsOld = 0, oldestSalon = '', bestSalon = '', cheapestPrice = Number.MAX_VALUE;
-
-    data.forEach(row => {
-        let [salonName, price, , age] = row;
-        let [minPrice, maxPrice] = price.split('-').map(Number);
-        let avgPrice = (minPrice + maxPrice) / 2;
-        let currentYearOld = Number(age);
-
-        if (currentYearOld > yearsOld) [yearsOld, oldestSalon] = [currentYearOld, salonName];
-        if (currentYearOld > 5 && avgPrice < cheapestPrice) [cheapestPrice, bestSalon] = [avgPrice, salonName];
-    })
-    console.log(`Oldest barbershop: ${oldestSalon}`)
-    console.log(`Best barbershop: ${bestSalon}`)
+    isValid(value) {
+        return this.checks.every(check => check(value));
+    }
 }
