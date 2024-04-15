@@ -30,10 +30,14 @@ async function handleFormSubmit(event) {
 
     const form = event.target;
     const formData = new FormData(form);
+    const jsonData = Object.fromEntries(formData.entries());
 
     const response = await fetch('/people', {
         method: 'POST',
-        body: formData
+        headers: {
+            'Content-Type': 'application/json' // Указываем, что отправляем данные в формате JSON
+        },
+        body: JSON.stringify(jsonData)
     });
 
     if (response.ok) {
