@@ -1,44 +1,18 @@
-class Validator {
-    string() {
-        return new StringSchema();
-    }
+function addRegistrationForm() {
+    const formContainer = document.querySelector('.form-container');
 
-    array() {
-        return new ArraySchema();
-    }
+    formContainer.innerHTML = `
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="inputName">Name</label>
+                <input type="text" class="form-control" id="inputName" placeholder="Input name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="inputPhone">Phone</label>
+                <input type="text" class="form-control" id="inputPhone" placeholder="Input phone" name="phone" required>
+            </div>
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </form>
+    `;
 }
-
-class StringSchema {
-    constructor() {
-        this.checks = [(value) => typeof value === 'string'];
-    }
-
-    containsNumber() {
-        this.checks.push((value) => /[0-9]/.test(value));
-        return this;
-    }
-
-    isValid(value) {
-        return this.checks.every(check => check(value));
-    }
-}
-
-class ArraySchema {
-    constructor() {
-        this.checks = [(value) => Array.isArray(value)];
-    }
-
-    containsNumber() {
-        this.checks.push((value) => value.every((item) => typeof item === 'number' && item % 1 === 0));
-        return this;
-    }
-
-    isValid(value) {
-        return this.checks.every((check) => check(value));
-    }
-
-    custom(condition) {
-        this.checks.push((value) => value.every(condition));
-        return this;
-    }
-}
+export default addRegistrationForm;
