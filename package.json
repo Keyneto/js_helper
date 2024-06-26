@@ -1,6 +1,12 @@
 {
-  "name": "fff",
+  "name": "express-app",
   "version": "1.0.0",
+  "description": "Simple Express app",
+  "main": "index.js",
   "dependencies": {
+    "express": "^4.19.2"
+  },
+  "scripts": {
+    "start": "node index.js"
   }
 }
